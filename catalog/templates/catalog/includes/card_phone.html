@@ -1,0 +1,16 @@
+<div class="card mb-3 center-block mx-auto" style="max-width: 35rem;">
+  <div class="row no-gutters">
+    <div class="col-md-4">
+      {% load staticfiles %}
+  		<object data='{{obj.s}}' type="image/png" style="max-width: 12rem;">
+ 			<img src="{% static 'catalog/images/default.png' %}" class="card-img-top" alt="Изображение" style="max-width: 12rem;">
+  		</object>
+    </div>
+    <div class="col-md-8">
+      <div class="card-body">
+        <h5 class="card-title">{{ obj.title }} - <b>{{ obj.cost }}р.</b></h5>
+    	<a href="{% url 'phone_detail' slug=obj.slug %}" class="btn btn-primary">Больше информации</a>
+      </div>
+    </div>
+  </div>
+</div>

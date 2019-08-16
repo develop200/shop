@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+
+{% block title %}
+{{ obj.title }}-{{block.super}}
+{% endblock %}
+
+{% block content %}
+<div class="card center-block mx-auto" style="max-width: 50rem;">
+{% load staticfiles %}
+  <object data='{{s}}' type="image/png" style="height: 22rem;">
+ 	<img src="{% static 'catalog/images/default.png' %}" class="card-img-top" alt="Изображение">
+  </object>
+  <div class="card-body">
+    <h5 class="card-title">{{ obj.title }} - <b>{{ obj.cost }}р.</b></h5>
+    <p class="card-text">{{ obj.body|safe|linebreaks }}</p>
+  </div>
+</div>
+{% endblock %}

@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+
+{% block title %}
+Delete {{obj.slug}}
+{% endblock %}
+
+{% block content %}
+<div class="card center-block mx-auto" style="max-width: 60rem;">
+	<div class="card-body">
+    <h5 class="card-title">Удаление слота</b></h5>
+    <form action="{% if is_computer %}{% url 'delete_computer' slug=obj.slug %}{% elif is_phone %}{% url 'delete_phone' slug=obj.slug %}{% endif %}" method="post">
+    	{% csrf_token %}
+		<div class="alert alert-primary" role="alert">
+  			Вы действительно хотите удалить слот <b>{{obj.title}}</b>?
+		</div>
+		<button type="submit" class="btn btn-primary">Yes</button>
+		<a href="{% if is_computer %}{% url 'computers_list' %}{% elif is_phone %}{% url 'phones_list' %}{% endif %}" class="btn btn-primary">No</a>
+	</form>
+  </div>
+</div>
+{% endblock %}

@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+{% block title %}
+{{block.super}}
+{% endblock %}
+
+{% block content %}
+	{% for obj in page.object_list %}
+		{% if is_computer %}
+			{% include "catalog/includes/card_computer.html" %}
+		{% elif is_phone%}
+			{% include "catalog/includes/card_phone.html" %}
+		{% endif %}
+	{% endfor %}
+{% endblock %}

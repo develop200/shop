@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <title>
+    	{% block title %}Shop{% endblock %}
+    </title>
+  </head>
+  <body>
+
+
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+
+
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+  <a class="navbar-brand" href="{% url 'product_menu' %}">Shop</a>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+
+  <div class="collapse navbar-collapse" id="navbarSupportedContent">
+    <ul class="navbar-nav mr-auto">
+      <li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          Товары
+        </a>
+        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+          <a class="dropdown-item" href="{% url 'computers_list' %}">Компьютеры</a>
+          <a class="dropdown-item" href="{% url 'phones_list' %}">Телефоны</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="#">Контактная информация</a>
+      </li>
+    </ul>
+    <form class="form-inline my-2 my-lg-0" action="{% if searchcomp %}{% url 'computers_list' %}{% elif searchphone %}{% url 'phones_list' %}{% endif %}" style="{% if not searchcomp and not searchphone %}display:none;{% endif %}">
+      <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search" name="search">
+      <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+    </form>
+  </div>
+</nav>
+
+	{% block content %}
+	 <div class="card">
+	  <h5 class="card-header">О компании</h5>
+	  <div class="card-body">
+	    <p class="card-text">Shop – крупнейший интернет-магазин модной одежды, обуви,
+аксессуаров, косметических средств, существующий уже 14 лет! Из года в год мы
+продолжаем развиваться, расширять географию присутствия и улучшать
+качество обслуживания, чтобы радовать Вас каждый день!</p>
+	  </div>
+	</div>
+    {% endblock %}
+{% if is_paginated %}
+  <div style="{% if not searchcomp and not searchphone %}display:none;{% endif %}max-width:35rem" class="center-block mx-auto">
+  <nav aria-label="..." style="display: block; margin-left: auto; margin-right: auto">
+  <ul class="pagination">
+    {% if prev_url %}
+    <li class="page-item">
+      <a class="page-link" href="{{prev_url}}" >Previous</a>
+    </li>
+    {% else %}
+    <li class="page-item disabled">
+      <a class="page-link" href="#" tabindex="-1" aria-disabled="true">Previous</a>
+    </li>
+    {% endif %}
+    {% for n in page.paginator.page_range %}
+      {% if page.number == n %}
+        <li class="page-item active" aria-current="page">
+          {% if not search_query %}
+          <a class="page-link" href="?page={{n}}">{{n}} <span class="sr-only">(current)</span></a>
+          {% else %}
+          <a class="page-link" href="?search={{search_query}}&page={{n}}">{{n}} <span class="sr-only">(current)</span></a>
+          {% endif %}
+        </li>
+      {% elif n > page.number|add:-4 and n < page.number|add:4 %}
+        <li class="page-item">
+          {% if not search_query %}
+          <a class="page-link" href="?page={{n}}">{{n}}</a>
+          {% else %}
+          <a class="page-link" href="?search={{search_query}}&page={{n}}">{{n}}</a>
+          {% endif %}
+        </li>
+      {% endif %}
+    {% endfor %}
+    {% if next_url %}
+    <li class="page-item">
+      <a class="page-link" href="{{next_url}}" >Next</a>
+    </li>
+    {% else %}
+    <li class="page-item disabled">
+      <a class="page-link" href="#" tabindex="-1" aria-disabled="true">Next</a>
+    </li>
+    {% endif %}
+  </ul>
+</nav>
+</div>
+{% endif %}
+    <!-- Footer -->
+    <footer class="page-footer font-small blue">
+
+      <!-- Copyright -->
+      <div class="footer-copyright text-center py-3">© 2018 Copyright:
+        <a href="https://mdbootstrap.com/education/bootstrap/"> MDBootstrap.com</a>
+      </div>
+      <!-- Copyright -->
+
+    </footer>
+  </body>
+</html>
